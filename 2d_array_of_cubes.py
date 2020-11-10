@@ -8,7 +8,7 @@ import bpy
 
 
 class create_array(bpy.types.Operator):
-		"""Create 2D Array of Cube"""     
+		"""Create 2D Array of Cubes"""     
 		bl_idname = "object.create_array"        
 		bl_label = "Create Array"         
 		bl_options = {'REGISTER', 'UNDO'}
