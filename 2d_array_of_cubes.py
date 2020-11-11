@@ -21,6 +21,7 @@ class create_array(bpy.types.Operator):
 		def create_cubes(self,loc):
 			#create the main cube
 			if not self.flag:
+				self.flag=True
 				bpy.ops.mesh.primitive_cube_add(location=loc,size=self.cube_size)
 				bpy.ops.object.duplicate
 			#copy object and place its location	
