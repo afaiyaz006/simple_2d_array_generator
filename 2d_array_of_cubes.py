@@ -13,23 +13,21 @@ class create_array(bpy.types.Operator):
 		bl_label = "Create Array"         
 		bl_options = {'REGISTER', 'UNDO'}
 		flag=True
-		row_numbers:bpy.props.IntProperty(name="Number of rows",default=10,min=1,max=20)
-		col_numbers:bpy.props.IntProperty(name="Number of columns",default=10,min=1,max=20)
+		row_numbers:bpy.props.IntProperty(name="Number of rows",default=10,min=1,max=1000)
+		col_numbers:bpy.props.IntProperty(name="Number of columns",default=10,min=1,max=1000)
 		cube_size:bpy.props.IntProperty(name="Cube Size",default=1,min=1,max=10)
 		min_dis:bpy.props.FloatProperty(name="Minimum distance",default=0.1,min=0,max=100)
 		
-		def create_cubes(self,loc):
-			#create the main cube
+		def create_cubes(self,loc,context):
 			if not self.flag:
 				self.flag=True
 				bpy.ops.mesh.primitive_cube_add(location=loc,size=self.cube_size)
 				bpy.ops.object.duplicate
-			#copy object and place its location	
 			else:
-				scene=bpy.context.scene
-				cube=bpy.context.active_object
+				sc=context.scene
+				cube=context.active_object
 				cubes=cube.copy()
-				self.scene.collection.objects.link(cubes)
+				sc.collection.objects.link(cubes)
 				cubes.location=loc
 				
 
@@ -45,7 +43,7 @@ class create_array(bpy.types.Operator):
 				for posx in range(1,self.row_numbers+1):
 					row_factor=posx*(self.cube_size+self.min_dis)
 					loc=(posx+row_factor,posy+col_factor,0)
-					self.create_cubes(loc)
+					self.create_cubes(loc,context)
 				
 			return {'FINISHED'}    
 			        
